@@ -55,9 +55,6 @@ def text_to_events(text: str):
     return events
 
 
-organizer = vCalAddress('MAILTO:racecom@theivca.com')
-organizer.params['cn'] = vText('IVCA')
-organizer.params['role'] = vText('Race Comms')
 for event in text_to_events(txt):
     cal.add_component(event)
 
