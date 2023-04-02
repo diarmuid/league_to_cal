@@ -1,12 +1,6 @@
-from icalendar import Calendar, Event, vCalAddress, vText
+from icalendar import Calendar, Event, vText
 from datetime import datetime, timedelta
-import re
-from io import StringIO
-import csv
 
-#,IVCA CALENDAR 2022,,,,,
-#Description,Date,Detail,Type,Distance,Sign-on/Venue,Time
-#
 
 cal = Calendar()
 txt='''12/04/23,Corkagh Park,19:00:00,Limit/Semi Limit Corkagh Park,Orwell
