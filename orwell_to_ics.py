@@ -3,25 +3,25 @@ from datetime import datetime, timedelta
 
 
 cal = Calendar()
-txt = """12/04/23,Corkagh Park,19:00:00,Limit/Semi Limit Corkagh Park,Orwell
-13/04/23,Corkagh Park,19:00:00,Scratch/Semi Scratch Corkagh Park,Orwell
-20/04/23,Brittas,19:00:00,Lap of the Lakes,STCC
-27/04/23,unknown,19:00:00,Hill Climb TT,IRC
-04/05/23,Green Sheds,19:00:00,Donal Gleeson Memorial,Blanch Wheelies
-11/05/23,Coolquay,19:00:00,Coolquay,Lucan
-25/05/23,Johnstown Bridge,19:30:00,10 mile TT,IRC
-01/06/23,Brittas,19:00:00,Sally Gap Finish,Lucan
-08/06/23,Mondello,19:30:00,Mondello,Lucan
-15/06/23,Corkagh Park,19:00:00,Devil takes the hindmost,Sundrive
-22/06/23,Curragh,19:30:00,Newbridge GP Circuit,Blanch Wheelies
-29/06/23,Brittas,19:00:00,Brittas,Orwell
-01/07/23,Curragh,10:00:00,Club Champs,STCC
-06/07/23,Mondello,19:30:00,Mondello,Sundrive
-13/07/23,Trim Road,19:00:00,25 mile 1T,IRC
-20/07/23,Doreys/Green Sheds,19:00:00,Doreys/Green Sheds,Sundrive
-27/07/23,Blessington,19:00:00,Point to Point,Orwell
-10/08/23,Doreys/Green Sheds,19:00:00,Doreys/Green Sheds,Blanch Wheelies
-17/08/23,Blessington,19:00:00,Prize Giving,STCC"""
+txt = """10 April 2024, Corkagh Park,19:00,L/SL Corkagh Park ,Orwell
+11 April 2024, Corkagh Park,19:00,S/SS ThursdayCorkagh Park ,Orwell
+18 April 2024,Brittas,19:00,Lap of the Lakes ,Sundrive
+25 April 2024,Coolquay,19:00,Coolquay,Lucan
+02 May 2024,Dunboyne,19:00,Donal Gleeson Memorial,Blanch Wheelies
+09 May 2024,Corkagh Park,19:00,L/SL @ 7.00 - S/SS @ 7.45 ,Clondalkin
+16 May 2024,Dunboyne,19:00,10 mile TT,Lucan
+23 May 2024,Doreys/Green Sheds,19:00,Doreys/Green Sheds ,Blanch Wheelies
+30 May 2024,Brittas,19:00,Sally Gap Finish ,STCC
+06 June 2024,Mondello,19:30 ,Mondello,Clondalkin
+13 June 2024,Hill Climb TT,19:00,Hill Climb TT,STCC
+20 June 2024,Curragh,19:30 ,Newbridge GP Circuit,Blanch Wheelies
+27 June 2024,Blessington,19:00,Russborough,Orwell
+11 July 2024,Mondello,19:30,Mondello,Sundrive
+18 July 2024,Trim Road TT,19:00,25 mile TT,Clondalkin
+25 July 2024,Point to Point,19:00,Blessington roll out,Orwell
+08 August 2024,Doreys/Green Sheds,19:00,Doreys/Green Sheds,Sundrive
+15 August 2024,Blessington,19:00,Prize Giving,STCC
+17 August 2024,Curragh,10:00,Club Champs,Lucan"""
 # 0 = date, 1=location, 2=time, 3=details, 4 organiser,
 
 
@@ -37,7 +37,7 @@ def text_to_events(text: str):
         m = _l.split(",")
         _event = Event()
         _event.add("summary", "[ICL] {} at {} organised by {}".format(m[3], m[1], m[4]))
-        st = datetime.strptime("{} {} +0100".format(m[2], m[0]), "%H:%M:%S %d/%m/%y %z")
+        st = datetime.strptime("{} {} +0100".format(m[2], m[0]), "%H:%M %d %B %Y %z")
         et = st + timedelta(hours=3)
         _event.add("dtstart", st)
         _event.add("dtend", et)
@@ -45,6 +45,7 @@ def text_to_events(text: str):
         _event["organizer"] = m[4]
         _event["location"] = vText("{}, Ireland".format(m[1]))
         events.append(_event)
+        print(f"Found Event {_event['summary']} at {_event["location"]} on {repr(st)}")
 
     return events
 
@@ -54,6 +55,6 @@ for event in text_to_events(txt):
 
 # Adding events to calendar
 
-f = open("icl_2023.ics", "wb")
+f = open("icl_2024.ics", "wb")
 f.write(cal.to_ical())
 f.close()
