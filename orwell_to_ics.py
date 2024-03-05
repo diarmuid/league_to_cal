@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 
 
 cal = Calendar()
-txt='''12/04/23,Corkagh Park,19:00:00,Limit/Semi Limit Corkagh Park,Orwell
+txt = """12/04/23,Corkagh Park,19:00:00,Limit/Semi Limit Corkagh Park,Orwell
 13/04/23,Corkagh Park,19:00:00,Scratch/Semi Scratch Corkagh Park,Orwell
 20/04/23,Brittas,19:00:00,Lap of the Lakes,STCC
 27/04/23,unknown,19:00:00,Hill Climb TT,IRC
@@ -21,8 +21,8 @@ txt='''12/04/23,Corkagh Park,19:00:00,Limit/Semi Limit Corkagh Park,Orwell
 20/07/23,Doreys/Green Sheds,19:00:00,Doreys/Green Sheds,Sundrive
 27/07/23,Blessington,19:00:00,Point to Point,Orwell
 10/08/23,Doreys/Green Sheds,19:00:00,Doreys/Green Sheds,Blanch Wheelies
-17/08/23,Blessington,19:00:00,Prize Giving,STCC'''
-#0 = date, 1=location, 2=time, 3=details, 4 organiser,
+17/08/23,Blessington,19:00:00,Prize Giving,STCC"""
+# 0 = date, 1=location, 2=time, 3=details, 4 organiser,
 
 
 def text_to_events(text: str):
@@ -33,17 +33,17 @@ def text_to_events(text: str):
     """
 
     events = []
-    for l in text.splitlines():
-        m = l.split(",")
+    for _l in text.splitlines():
+        m = _l.split(",")
         _event = Event()
-        _event.add('summary', "[ICL] {} at {} organised by {}".format(m[3], m[1], m[4]))
+        _event.add("summary", "[ICL] {} at {} organised by {}".format(m[3], m[1], m[4]))
         st = datetime.strptime("{} {} +0100".format(m[2], m[0]), "%H:%M:%S %d/%m/%y %z")
         et = st + timedelta(hours=3)
-        _event.add('dtstart', st)
-        _event.add('dtend', et)
-        #_event.add('dtend', datetime.strptime("21:00 {} 2022 +0100".format(m.group(1)), "%H:%M %d %b %Y %z"))
-        _event['organizer'] = m[4]
-        _event['location'] = vText('{}, Ireland'.format(m[1]))
+        _event.add("dtstart", st)
+        _event.add("dtend", et)
+        # _event.add('dtend', datetime.strptime("21:00 {} 2022 +0100".format(m.group(1)), "%H:%M %d %b %Y %z"))
+        _event["organizer"] = m[4]
+        _event["location"] = vText("{}, Ireland".format(m[1]))
         events.append(_event)
 
     return events
@@ -54,6 +54,6 @@ for event in text_to_events(txt):
 
 # Adding events to calendar
 
-f = open('icl_2023.ics', 'wb')
+f = open("icl_2023.ics", "wb")
 f.write(cal.to_ical())
 f.close()
